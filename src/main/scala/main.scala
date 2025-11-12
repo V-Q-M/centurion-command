@@ -57,21 +57,28 @@ def printFrontlineStats() = {
 
 
 def printHelp() = {
-  println("Help: ")
-  println("Type ARMY to see army composition")
-  println("Type STATS to see army stats")
-  println("Type ACTIONS to see available actions")
-  println("Type EXIT to leave the game")
+  println("Available commands: ")
+  println("ARMY - See army composition")
+  println("STATS - See army stats")
+  println("ACTIONS - See available actions")
+  println("EXIT - Leave the game")
   println()
 }
 
 def printActions() = {
-  println("Actions: ")
-  println("Type FORMATION to change formation")
-  println("Type MOVE to push forward (if possible)")
-  println("Type SWAP to swap frontline (refreshes current frontline)")
-  println("Type RETREAT to fall back safely")
+  println("Available actions: ")
+  println("FORMATION <type> - Change to specified formation")
+  println("MOVE - Push forward with your army (if possible)")
+  println("SWAP - Swap frontline (refreshes current frontline)")
+  println("RETREAT - Fall back safely")
   println()
+}
+
+def printFormations() = {
+  println("Choose a formation: ")
+  println("Battle - High offense, high defense, low mobility")
+  println("Testudo - Low offense, immunity to range attacks, very low mobility")
+  println("March - Low offense, very low defense, high mobility")
 }
 
 
@@ -88,7 +95,18 @@ def main () = {
         printArmyStats()
         printFrontlineStats()
       case "ACTIONS" => printActions()
-      case "FORMATION" => println("[Battle/Testudo/March]")
+      case "FORMATION" => 
+        printFormations()
+        val formation = readLine("> ").trim.toLowerCase()
+        formation match {
+          case "battle" => println("Switching to *battle* formation...")
+          case "testudo" => println("Switching to *testudo* formation...")
+          case "march" => println("Switching to *march* formation...")
+          case "exit" => 
+            println("Ave, Centurion. Until next time.")
+            running = false
+          case _ => println("Invalid input. Type HELP for a list of commands\n")
+        }
       case "MOVE" => println("Moving forward...")
       case "SWAP" => println("Swapping frontline...")
       case "RETREAT" => println("Retreating...")
