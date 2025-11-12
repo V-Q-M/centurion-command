@@ -26,6 +26,9 @@ jobs:
           distribution: temurin
           java-version: 17   # or whatever version your project needs
 
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1
+
       # Step 3: Cache SBT & dependencies (speeds up builds)
       - name: Cache SBT
         uses: actions/cache@v4
