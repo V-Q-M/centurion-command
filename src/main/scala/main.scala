@@ -1,3 +1,4 @@
+import scala.io.StdIn.readLine
 
 enum Status {
   case MOVING
@@ -26,14 +27,7 @@ var frontlineStrength: Double = 100.0
 def initialize() = {
   println("Welcome to this game!")
   println()
-  printOwnArmy()
-
-  printArmyStats()
-  printFrontlineStats()
-
   printHelp()
-
-  printActions()
 }
 
 
@@ -80,7 +74,20 @@ def printActions() = {
   println()
 }
 
+
 @main
 def main () = {
   initialize()
+
+  var running: Boolean = true
+  while running do
+    val command = readLine("> ").trim.toUpperCase()
+    command match {
+      case "HELP" => printHelp()
+      case "EXIT" => 
+        println("Ave, Centurion. Until next time.")
+        running = false
+      case _ => println("Invalid input. Type HELP for a list of commands\n")
+    }
+
 }
