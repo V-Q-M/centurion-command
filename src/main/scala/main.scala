@@ -88,6 +88,10 @@ def main () = {
         printArmyStats()
         printFrontlineStats()
       case "ACTIONS" => printActions()
+      case "FORMATION" => println("[Battle/Testudo/March]")
+      case "MOVE" => println("Moving forward...")
+      case "SWAP" => println("Swapping frontline...")
+      case "RETREAT" => println("Retreating...")
       case "HELP" => printHelp()
       case "EXIT" => 
         println("Ave, Centurion. Until next time.")
