@@ -15,6 +15,10 @@ enum Formation {
   case Marching
 }
 
+// Quits the game when this becomes false
+var running: Boolean = true
+
+// Used for probability
 val rnd = new Random()
 
 val armyComposition = List("Centurion","Optio","Cornicen","Signifer", "Legionary")
@@ -101,14 +105,20 @@ def simulateCombat() = {
     soldierDies(casualties)
     println(s"Lost $casualties soldiers this round")
   else println(s"Lost 0 soldiers this round")
+
+  // check gameover
+  if troopCount <= 0 then
+    println("You have been defeated...")
+    running = false
 }
+
 
 @main
 def main () = {
   initialize()
 
-  var running: Boolean = true
   while running do
+    
   // process input
     val command = readLine("> ").trim.toUpperCase()
     command match {
