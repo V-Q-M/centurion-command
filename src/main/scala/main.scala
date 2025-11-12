@@ -17,7 +17,7 @@ val armyComposition = List("Centurion","Optio","Cornicen","Signifer", "Legionary
 
 // Troop stats
 var troopCount: Int = 80
-var movementSpeed: Int = 1
+var troopSpeed: Int = 1
 var troopStatus: Status = Status.MOVING
 var troopFormation: Formation = Formation.Battle
 var frontlineStamina: Double = 100.0
@@ -31,7 +31,7 @@ def initialize() = {
 }
 
 
-def printOwnArmy() = {
+def printArmyComposition() = {
   println("Your army consists of: ")
   armyComposition.zipWithIndex.map {
     case (element, index) => println(s"${index + 1}: $element")
@@ -44,7 +44,7 @@ def printArmyStats() = {
   println(s"Troop count: $troopCount men")
   println(s"Status: $troopStatus")
   println(s"Formation: $troopFormation formation")
-  println(s"Movement speed: ${movementSpeed}x")
+  println(s"Movement speed: ${troopSpeed}x")
   println()
 }
 
@@ -83,7 +83,7 @@ def main () = {
   while running do
     val command = readLine("> ").trim.toUpperCase()
     command match {
-      case "ARMY" => printOwnArmy()
+      case "ARMY" => printArmyComposition()
       case "STATS" => 
         printArmyStats()
         printFrontlineStats()
