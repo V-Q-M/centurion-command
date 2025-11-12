@@ -1,0 +1,43 @@
+name: '[CI] compile'
+
+on:
+  push:
+    branches: 
+      - main 
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out your code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Java (required for sbt)
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17   # or whatever version your project needs
+
+      # Step 3: Cache SBT & dependencies (speeds up builds)
+      - name: Cache SBT
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+            ~/.coursier
+          key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt') }}
+          restore-keys: |
+            ${{ runner.os }}-sbt-
+
+      # Step 4: Run sbt compile 
+      - name: Compile with sbt
+        run: sbt compile
