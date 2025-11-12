@@ -83,6 +83,11 @@ def main () = {
   while running do
     val command = readLine("> ").trim.toUpperCase()
     command match {
+      case "ARMY" => printOwnArmy()
+      case "STATS" => 
+        printArmyStats()
+        printFrontlineStats()
+      case "ACTIONS" => printActions()
       case "HELP" => printHelp()
       case "EXIT" => 
         println("Ave, Centurion. Until next time.")
