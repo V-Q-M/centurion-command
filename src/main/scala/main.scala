@@ -1,4 +1,6 @@
 import scala.io.StdIn.readLine
+import scala.util.Random
+
 
 enum Status {
   case MOVING
@@ -12,6 +14,12 @@ enum Formation {
   case Testudo
   case Marching
 }
+
+// Quits the game when this becomes false
+var running: Boolean = true
+
+// Used for probability
+val rnd = new Random()
 
 val armyComposition = List("Centurion","Optio","Cornicen","Signifer", "Legionary")
 
@@ -61,6 +69,7 @@ def printHelp() = {
   println("ARMY - See army composition")
   println("STATS - See army stats")
   println("ACTIONS - See available actions")
+  println("PROCEED - Continues to next round")
   println("EXIT - Leave the game")
   println()
 }
@@ -82,12 +91,35 @@ def printFormations() = {
 }
 
 
+// should get called during combat, depending on how strong the enemy is and how strong our army is
+def soldierDies(casualties: Int) = {
+  troopCount -= casualties
+}
+
+// Very simple - Needs to be enchanced later on
+def simulateCombat() = {
+  val randomNumber: Int = rnd.nextInt(100) // 0 to 99
+  val casualties: Int = rnd.nextInt(5) // 0 to 4
+
+  if randomNumber > 25 then 
+    soldierDies(casualties)
+    println(s"Lost $casualties soldiers this round")
+  else println(s"Lost 0 soldiers this round")
+
+  // check gameover
+  if troopCount <= 0 then
+    println("You have been defeated...")
+    running = false
+}
+
+
 @main
 def main () = {
   initialize()
 
-  var running: Boolean = true
   while running do
+    
+  // process input
     val command = readLine("> ").trim.toUpperCase()
     command match {
       case "ARMY" => printArmyComposition()
@@ -110,11 +142,16 @@ def main () = {
       case "MOVE" => println("Moving forward...")
       case "SWAP" => println("Swapping frontline...")
       case "RETREAT" => println("Retreating...")
+      case "PROCEED" => 
+        println("Next round")
+        // Update gamestate
+        simulateCombat() 
       case "HELP" => printHelp()
       case "EXIT" => 
         println("Ave, Centurion. Until next time.")
         running = false
       case _ => println("Invalid input. Type HELP for a list of commands\n")
     }
+
 
 }
